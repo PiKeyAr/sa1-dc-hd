@@ -18,3 +18,5 @@ The following goals are considered for this project:
 5) Better quality FMVs.
 
 At the moment this repository is only used to share information. Ready-made downloads and feature requests are unavailable.
+
+Unless specified otherwise, all patches and codes shared here are for Sonic Adventure 1.005 (US, animated title screen).
