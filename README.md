@@ -12,7 +12,7 @@ The following goals are considered for this project:
 
 **Enhancements and other fixes**
 1) A texture pack with HD menu textures based on [SADX HD GUI 2](https://github.com/PiKeyAr/sadx-hd-gui).
-2) Restoration of unused but functional SET objects similar to the "Extra SET layouts" option in [SADX Dreamcast Conversion](https://github.com/PiKeyAr/sadx_dreamcast).
+2) Restoration of unused but functional SET objects similar to the "Extra SET layouts" option in the [Fixes, Adds and Beta Restores mod](https://github.com/supercoolsonic/Fixes_Adds_BetaRestores).
 3) Increased level and object draw distance.
 4) Various minor fixes related to object placement, missing collision etc. that involve small edits to the landtable or SET items.
 5) Better quality FMVs.
