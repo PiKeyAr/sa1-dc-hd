@@ -2,4 +2,8 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
+/bin
+/FraGag.Compression.Prs/obj
+/patcher/obj
 /.vs
+/patcher/.vs/patcher/v16

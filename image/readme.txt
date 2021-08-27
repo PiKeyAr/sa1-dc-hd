@@ -1,1 +1,0 @@
-Put your Sonic Adventure GDI (with BIN files) here.
