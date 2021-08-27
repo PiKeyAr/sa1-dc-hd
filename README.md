@@ -4,7 +4,7 @@ Version 27/08/2021
 
 This repository hosts a program that applies a set of patches to the Dreamcast version of Sonic Adventure to introduce various fixes and improvements.
 
-The patched version is meant to be run on emulators, although everything other than 60 FPS and the widescreen hacks will also work on original Dreamcast hardware.
+The patched version is meant to be run the [flycast emulator](https://flyinghead.github.io/flycast-builds), although everything other than 60 FPS and widescreen hacks will also work on other emulators and original Dreamcast hardware.
 
 **LIST OF PATCHES**
 
