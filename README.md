@@ -27,7 +27,7 @@ All patches are optional and can be toggled individually before building the ima
 **As of August 2021, only flycast is compatible with the 60 FPS code and the current implementation of the widescreen hack.**
 
 **HOW TO USE**
-1. Download the latest release and extract it somewhere.
+1. Download the latest [release](https://github.com/PiKeyAr/sa1-dc-hd/releases) and extract it somewhere.
 2. Run `Patcher.exe`.
 3. In the first tab, select the folder containing your SA1 GDI file. If the SA1 image is the correct version, two other tabs will appear.
 ![Tab1](images/tab1.png)
