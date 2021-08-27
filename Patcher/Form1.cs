@@ -63,6 +63,8 @@ namespace GUIPatcher
 
         private void InitializePatches()
         {
+            tabControl1.TabPages.Remove(tabPatches);
+            tabControl1.TabPages.Remove(tabPageFinish);
             tabControl1.TabPages.Add(tabPatches);
             tabControl1.TabPages.Add(tabPageFinish);
             patchListBox.Items.Clear();
@@ -358,7 +360,14 @@ namespace GUIPatcher
         void Step4_gdi_exit(object sender, System.EventArgs e)
         {
             RefreshProgress("Step 6/6: Cleaning up");
-            Directory.Delete(Path.Combine(textBoxOutputPath.Text, "data"), true);
+            try
+            {
+                Directory.Delete(Path.Combine(textBoxOutputPath.Text, "data"), true);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Unable to delete temporary files: {0}", ex.Message);
+            }
             Console.WriteLine("The modified image is located at: {0}", textBoxOutputPath.Text);
             if (File.Exists(Path.Combine(currentDir, "codes", "SA1-DC-HD.cht")))
             {
@@ -368,7 +377,7 @@ namespace GUIPatcher
             Console.WriteLine("DONE!");
             RefreshProgress("Click Build to create a modified GDI image. Progress will be shown below.", false);
             EnableBuildButton();
-        }
+            }
 
         void proc_DataReceived(object sender, DataReceivedEventArgs e)
         {
