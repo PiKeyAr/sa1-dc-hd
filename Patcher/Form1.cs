@@ -295,8 +295,8 @@ namespace GUIPatcher
         {
             string filename;
             string workdir = Path.Combine(textBoxOutputPath.Text);
-            string dataDir="\"" + Path.Combine(workdir, "data")+ "\"";
-            string ipBin = "\"" + Path.Combine(currentDir, "utils", "ip.bin")+ "\"";
+            string dataDir = "\"" + Path.Combine(workdir, "data") + "\"";
+            string ipBin = "\"" + Path.Combine(currentDir, "utils", "ip.bin") + "\"";
             string gdiOutput = "\"" + workdir + "\"";
             string args;
             if (!File.Exists(Path.Combine(textBoxOutputPath.Text, "data", "1ST_READ.BIN")))
@@ -318,7 +318,7 @@ namespace GUIPatcher
             {
                 Console.WriteLine("Applying patch: {0}", patchData[patch].Global["Name"]);
                 bool result = Patcher(Path.Combine(textBoxOutputPath.Text, "data"), patchData[patch]);
-                if (result == false) 
+                if (result == false)
                     errors = true;
             }
             if (errors)
@@ -353,21 +353,16 @@ namespace GUIPatcher
             }
             RefreshProgress("Step 5/6: Building a modified image");
             filename = "buildgdi.exe";
-            args = "-data " +dataDir + " -ip " + ipBin+ " -output " + gdiOutput + " -raw";
+            args = "-data " + dataDir + " -ip " + ipBin + " -output " + gdiOutput + " -raw";
             CreateProcessInfo(filename, workdir, args, Step4_gdi_exit);
         }
 
         void Step4_gdi_exit(object sender, System.EventArgs e)
         {
             RefreshProgress("Step 6/6: Cleaning up");
-            try
-            {
-                Directory.Delete(Path.Combine(textBoxOutputPath.Text, "data"), true);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Unable to delete temporary files: {0}", ex.Message);
-            }
+            string directoryPath = Path.Combine(textBoxOutputPath.Text, "data");
+            Task<bool> task = TryDeleteDirectory(directoryPath, 3, 30);
+            task.Wait();
             Console.WriteLine("The modified image is located at: {0}", textBoxOutputPath.Text);
             if (File.Exists(Path.Combine(currentDir, "codes", "SA1-DC-HD.cht")))
             {
@@ -377,7 +372,7 @@ namespace GUIPatcher
             Console.WriteLine("DONE!");
             RefreshProgress("Click Build to create a modified GDI image. Progress will be shown below.", false);
             EnableBuildButton();
-            }
+        }
 
         void proc_DataReceived(object sender, DataReceivedEventArgs e)
         {
@@ -435,9 +430,9 @@ namespace GUIPatcher
                     for (int i = 0; i < value.Length; i += 2)
                     {
                         byte toWrite = byte.Parse(value.Substring(i, 2), System.Globalization.NumberStyles.HexNumber);
-//#if DEBUG
+                        //#if DEBUG
                         //Console.WriteLine("Changing {0} from {1} to {2}", (address + cnt).ToString("X"), fileData[address + i].ToString("X"), toWrite.ToString("X"));
-//#endif
+                        //#endif
                         fileData[address + cnt] = byte.Parse(value.Substring(i, 2), System.Globalization.NumberStyles.HexNumber);
                         cnt++;
                     }
@@ -445,9 +440,9 @@ namespace GUIPatcher
                 if (isPRS)
                 {
                     Console.WriteLine("Compressing PRS...");
-//#if DEBUG
+                    //#if DEBUG
                     //File.WriteAllBytes(Path.ChangeExtension(destFilePath, "BIN"), fileData);
-//#endif
+                    //#endif
                     fileData = csharp_prs.Prs.Compress(ref fileData, 255);
                 }
                 if (!Directory.Exists(Path.GetDirectoryName(destFilePath)))
@@ -458,5 +453,44 @@ namespace GUIPatcher
             Console.WriteLine();
             return true;
         }
+
+        // From https://stackoverflow.com/a/44324346
+        public static async Task<bool> TryDeleteDirectory(
+        string directoryPath,
+        int maxRetries = 10,
+        int millisecondsDelay = 30)
+        {
+            if (directoryPath == null)
+                throw new ArgumentNullException(directoryPath);
+            if (maxRetries < 1)
+                throw new ArgumentOutOfRangeException(nameof(maxRetries));
+            if (millisecondsDelay < 1)
+                throw new ArgumentOutOfRangeException(nameof(millisecondsDelay));
+
+            for (int i = 0; i < maxRetries; ++i)
+            {
+                try
+                {
+                    if (Directory.Exists(directoryPath))
+                    {
+                        Directory.Delete(directoryPath, true);
+                    }
+
+                    return true;
+                }
+                catch (IOException)
+                {
+                    await Task.Delay(millisecondsDelay);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    await Task.Delay(millisecondsDelay);
+                }
+            }
+
+            return false;
+        }
     }
+
+
 }
