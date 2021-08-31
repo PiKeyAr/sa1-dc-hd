@@ -43,6 +43,8 @@ All patches are optional and can be toggled individually before building the ima
 ![Culling](images/culling.png)
 
 **CONFIGURING FLYCAST**
+
+
 Video tab:
 ![Flycast-Video](images/flycast_video.png)
 
