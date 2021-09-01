@@ -60,4 +60,5 @@ This patcher uses the following tools/libraries:
 - bin2iso and extract from FamilyGuy's GDI2Data https://dcemulation.org/dumpcast/viewtopic.php?t=785
 - buildgdi from Sappharad's GDIbuilder https://github.com/Sappharad/GDIbuilder
 - Sewer56's dlang-prs https://github.com/Sewer56/dlang-prs
+- SonicFreak94's pvmx https://github.com/michael-fadely/pvmx
 - ini-parser https://github.com/rickyah/ini-parser
