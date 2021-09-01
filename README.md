@@ -1,6 +1,6 @@
 # Sonic Adventure DC-HD
 
-Version 31/08/2021
+Version 01/09/2021
 
 This repository hosts a program that applies a set of patches to the Dreamcast version of Sonic Adventure to introduce various fixes and improvements.
 
@@ -16,8 +16,12 @@ The patched version is meant to be run on the [flycast emulator](https://flyingh
 - Less choppy ocean in Emerald Coast (similar to Dreamcast Conversion for SADX PC).
 - Some levels have better level draw distance.
 
+**LIST OF CHEAT CODES**
+- All characters unlocked in Adventure Mode.
+- Easy fishing (infinite rod tension).
 
-All patches are optional and can be toggled individually before building the image.
+
+All patches are optional and can be toggled individually before building the image. Cheat codes can be toggled in flycast's Cheats menu.
 
 
 **PREREQUISITES**
@@ -25,7 +29,7 @@ All patches are optional and can be toggled individually before building the ima
 - Sonic Adventure US 1.005 GDI image.
 - [flycast](https://flyinghead.github.io/flycast-builds/) or reicast to play the game.
 
-**As of August 2021, only flycast is compatible with the 60 FPS code and the current implementation of the widescreen hack.**
+**As of August 2021, only flycast is compatible with the 60 FPS code and the current implementation of the widescreen hack. The cheat table is in the RetroArch .cht format used by flycast.**
 
 **HOW TO USE**
 1. Download the latest [release](https://github.com/PiKeyAr/sa1-dc-hd/releases) and extract it somewhere.
