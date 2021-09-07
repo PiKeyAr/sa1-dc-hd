@@ -3,6 +3,7 @@ using IniParser.Model;
 using Ookii.Dialogs.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -14,8 +15,32 @@ namespace GUIPatcher
 {
     public partial class Form1 : Form
     {
-        public List<IniData> patchData;
-        public List<int> activePatches;
+        public class Mod
+        {
+            public string Name;
+            public string Author;
+            public string Version;
+            public string Description;
+            public string[] FileReplacements;
+            public IniData PatchData;
+
+            public Mod(string inifile)
+            {
+                var ini = new FileIniDataParser();
+                PatchData = ini.ReadFile(inifile);
+                Name = PatchData.Global["Name"];
+                Author = PatchData.Global["Author"];
+                Version = PatchData.Global["Version"];
+                Description = PatchData.Global["Description"];
+                string modpath = Path.GetDirectoryName(inifile);
+                var files = Directory.GetFiles(Path.GetFullPath(modpath), "*.*", SearchOption.TopDirectoryOnly).Where(name => !name.EndsWith(".ini", StringComparison.OrdinalIgnoreCase));
+                FileReplacements = files.ToArray();
+            }
+        }
+
+        public IniData settings;
+        public List<Mod> mods;
+        public List<string> activeMods;
         public string currentDir;
         public TextBoxWriter writer;
 
@@ -23,23 +48,55 @@ namespace GUIPatcher
         {
             InitializeComponent();
             currentDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            activePatches = new List<int>();
-            tabControl1.TabPages.Remove(tabPatches);
-            tabControl1.TabPages.Remove(tabPageFinish);
+            activeMods = new List<string>();
+            tabMods.Enabled = false; if (CheckSA1Version(textBoxOriginalPath.Text))
+                tabBuild.Enabled = false;
+            mods = new List<Mod>();
             if (File.Exists("settings.ini"))
                 LoadSettings("settings.ini");
+            else
+                settings = new IniData();
+            InitializeMods();
+            CheckMods();
+            if (CheckSA1Version(textBoxOriginalPath.Text))
+                tabControl1.SelectedIndex = 0;
+            else
+                tabControl1.SelectedIndex = 1;
+        }
+
+        private void CheckMods()
+        {
+            // Load mods
+            if (settings.Global["Mods"] != null)
+            {
+                string[] activeModListINI = settings.Global["Mods"].Split(',');
+                for (int i = 0; i < activeModListINI.Length; i++)
+                {
+                    bool missing = true;
+                    if (activeModListINI[i] != "")
+                        foreach (Mod mod in mods)
+                            if (mod.Name == activeModListINI[i])
+                            {
+                                missing = false;
+                                activeMods.Add(activeModListINI[i]);
+                            }
+                    if (missing)
+                    {
+                        MessageBox.Show("Mod '" + activeModListINI[i] + "' is missing.\n\nIt will be removed from the active mod list.");
+                    }
+                }
+            }
+            // Check mods
+            foreach (Mod mod in mods)
+                modListView.Items.Add(new ListViewItem(new[] { mod.Name, mod.Author, mod.Version }) { Checked = activeMods.Contains(mod.Name) ? true : false });
         }
 
         private void LoadSettings(string file)
         {
+            // Load INI
             var ini = new FileIniDataParser();
-            IniData settings = ini.ReadFile(Path.Combine(currentDir, "settings.ini"));
-            string[] patchesList = settings.Global["Patches"].Split(',');
-            for (int i = 0; i < patchesList.Length; i++)
-            {
-                if (patchesList[i] != "")
-                    activePatches.Add(int.Parse(patchesList[i]));
-            }
+            settings = ini.ReadFile(Path.Combine(currentDir, "settings.ini"));
+            // Load paths
             textBoxOriginalPath.Text = settings.Global["OriginalPath"];
             textBoxOutputPath.Text = settings.Global["OutputPath"];
         }
@@ -47,49 +104,35 @@ namespace GUIPatcher
         private void SaveSettings()
         {
             IniData settings = new IniData();
+            // Save paths
             settings.Global["OriginalPath"] = textBoxOriginalPath.Text;
             settings.Global["OutputPath"] = textBoxOutputPath.Text;
-            activePatches.Clear();
-            for (int c = 0; c < patchListBox.Items.Count; c++)
+            // Save mods
+            activeMods.Clear();
+            for (int c = 0; c < modListView.Items.Count; c++)
             {
-                if (patchListBox.GetItemChecked(c))
-                    activePatches.Add(c);
+                if (modListView.Items[c].Checked)
+                    activeMods.Add(modListView.Items[c].Text);
             }
-            settings.Global["Patches"] = string.Join(",", activePatches.Select(n => n.ToString()).ToArray());
+            settings.Global["Mods"] = string.Join(",", activeMods);
             var ini = new FileIniDataParser();
+            // Write INI
             ini.WriteFile(Path.Combine(currentDir, "settings.ini"), settings);
         }
 
-        private void InitializePatches()
+        private void InitializeMods()
         {
-            tabControl1.TabPages.Remove(tabPatches);
-            tabControl1.TabPages.Remove(tabPageFinish);
-            tabControl1.TabPages.Add(tabPatches);
-            tabControl1.TabPages.Add(tabPageFinish);
-            patchListBox.Items.Clear();
-            tabControl1.SelectedIndex = 1;
+            modListView.Items.Clear();
             var ini = new FileIniDataParser();
-            string[] inifiles = Directory.GetFiles(Path.GetFullPath(Path.Combine(currentDir, "patches")), "*.ini", SearchOption.AllDirectories);
-            patchData = new List<IniData>();
+            string[] inifiles = Directory.GetFiles(Path.GetFullPath(Path.Combine(currentDir, "mods")), "mod.ini", SearchOption.AllDirectories);
             for (int i = 0; i < inifiles.Length; i++)
-            {
-                IniData data = ini.ReadFile(inifiles[i]);
-                patchListBox.Items.Add(data.Global["Name"]);
-                patchData.Add(data);
-            }
-            foreach (int p in activePatches)
-            {
-                patchListBox.SetItemChecked(p, true);
-            }
-            tabControl1.Enabled = true;
+                mods.Add(new Mod(inifiles[i]));
         }
 
-        private void patchListBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void modListView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (patchListBox.SelectedIndex == -1)
-                patchDescription.Text = "Patch description.";
-            else
-                patchDescription.Text = patchData[patchListBox.SelectedIndex].Global["Description"].Replace("\\n", System.Environment.NewLine);
+            if (modListView.SelectedItems.Count > 0)
+                modDescription.Text = mods[modListView.SelectedIndices[0]].Description.Replace("\\n", System.Environment.NewLine);
         }
 
         enum SA1Version
@@ -166,13 +209,15 @@ namespace GUIPatcher
         {
             if (CheckSA1Version(textBoxOriginalPath.Text))
             {
-                InitializePatches();
+                tabMods.Enabled = true;
+                tabBuild.Enabled = true;
             }
             else
             {
-                tabControl1.TabPages.Remove(tabPatches);
-                tabControl1.TabPages.Remove(tabPageFinish);
+                tabMods.Enabled = false;
+                tabBuild.Enabled = false;
             }
+            CheckBuildButton();
         }
 
         private void buttonBrowse_Click(object sender, EventArgs e)
@@ -187,17 +232,17 @@ namespace GUIPatcher
                 textBoxOriginalPath.Text = dlg.SelectedPath;
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void CheckBuildButton()
         {
-            SaveSettings();
+            if (textBoxOutputPath.Text != "" && CheckSA1Version(textBoxOriginalPath.Text))
+                buttonBuild.Enabled = true;
+            else
+                buttonBuild.Enabled = false;
         }
 
         private void textBoxOutputPath_TextChanged(object sender, EventArgs e)
         {
-            if (textBoxOutputPath.Text != "" && Directory.Exists(textBoxOutputPath.Text))
-                buttonBuild.Enabled = true;
-            else
-                buttonBuild.Enabled = false;
+            CheckBuildButton();
         }
 
         private Process CreateProcessInfo(string file, string workdir, string arguments, EventHandler exit)
@@ -259,8 +304,16 @@ namespace GUIPatcher
             string filename;
             string workdir = Path.Combine(textBoxOutputPath.Text, "data");
             string args;
+            tabControl1.SelectedIndex = 2;
             textBoxLog.Text = "";
             buttonBuild.Enabled = false;
+            // Recheck current mods
+            activeMods.Clear();
+            for (int c = 0; c < modListView.Items.Count; c++)
+            {
+                if (modListView.Items[c].Checked)
+                    activeMods.Add(modListView.Items[c].Text);
+            }
             writer = new TextBoxWriter(textBoxLog);
             timer1.Enabled = true;
             Console.SetOut(writer);
@@ -307,16 +360,19 @@ namespace GUIPatcher
                 File.Delete(Path.Combine(textBoxOutputPath.Text, "track03.iso"));
             RefreshProgress("Step 3/6: Patching files");
             bool errors = false;
-            activePatches.Clear();
-            for (int c = 0; c < patchListBox.Items.Count; c++)
+            // Select active mods to apply
+            List<Mod> applyMods = new List<Mod>();
+            for (int i = 0; i < mods.Count; i++)
             {
-                if (patchListBox.GetItemChecked(c))
-                    activePatches.Add(c);
+                for (int u = 0; u < activeMods.Count; u++)
+                    if (mods[i].Name == activeMods[u])
+                        applyMods.Add(mods[i]);
             }
-            foreach (int patch in activePatches)
+            // Apply mods
+            foreach (Mod mod in applyMods)
             {
-                Console.WriteLine("Applying patch: {0}", patchData[patch].Global["Name"]);
-                bool result = Patcher(Path.Combine(textBoxOutputPath.Text, "data"), patchData[patch]);
+                Console.WriteLine("Applying mods: {0}", mod.Name);
+                bool result = InstallMod(Path.Combine(textBoxOutputPath.Text, "data"), mod);
                 if (result == false)
                     errors = true;
             }
@@ -396,9 +452,16 @@ namespace GUIPatcher
             if (writer != null) writer.WriteOut();
         }
 
-        private bool Patcher(string datapath, IniData data)
+        private bool InstallMod(string datapath, Mod data)
         {
-            foreach (SectionData section in data.Sections)
+            Console.WriteLine("Processing files:");
+            foreach (string file in data.FileReplacements)
+            {
+                Console.WriteLine(Path.GetFileName(file));
+                string replFilePath = (Path.Combine(datapath, "SONICADV", Path.GetFileName(file)));
+                File.Copy(file, replFilePath, true);
+            }
+            foreach (SectionData section in data.PatchData.Sections)
             {
                 string destFilePath = (Path.Combine(datapath, section.SectionName));
                 if (!File.Exists(destFilePath))
@@ -488,6 +551,11 @@ namespace GUIPatcher
             }
 
             return false;
+        }
+
+        private void buttonSaveSettings_Click(object sender, EventArgs e)
+        {
+            SaveSettings();
         }
     }
 

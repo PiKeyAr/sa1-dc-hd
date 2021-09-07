@@ -33,6 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>sa1alt.ico</ApplicationIcon>
@@ -81,6 +82,9 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ModInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextBoxWriter.cs" />
@@ -115,11 +119,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>mkdir "$(SolutionDir)bin\patches\"
+    <PreBuildEvent>mkdir "$(SolutionDir)bin\mods\"
 mkdir "$(SolutionDir)bin\utils\"
 mkdir "$(SolutionDir)bin\codes\"
 xcopy /D /Y "$(SolutionDir)utils\*.*" "$(SolutionDir)bin\utils"
-xcopy /D /Y "$(SolutionDir)patches\*.*" "$(SolutionDir)bin\patches\"
+xcopy /Y /S "$(SolutionDir)mods\*.*" "$(SolutionDir)bin\mods\"
 xcopy /D /Y "$(SolutionDir)codes\*.*" "$(SolutionDir)bin\codes\"
 </PreBuildEvent>
   </PropertyGroup>
