@@ -1,56 +1,45 @@
-# Sonic Adventure DC-HD
+ Sonic Adventure DC-HD
 
-Version 01/09/2021
+Version 09/09/2021
 
-This repository hosts a program that applies a set of patches to the Dreamcast version of Sonic Adventure to introduce various fixes and improvements.
+This repository hosts a program that applies a set of patches (mods) to the Dreamcast version of Sonic Adventure to introduce various fixes and improvements.
 
-The patched version is meant to be run on the [flycast emulator](https://flyinghead.github.io/flycast-builds), although everything other than 60 FPS and widescreen hacks will also work on other emulators and original Dreamcast hardware.
+The modded version is meant to be run on the [flycast emulator](https://flyinghead.github.io/flycast-builds), although *some* (not all!) mods will also work on other emulators and original Dreamcast hardware.
 
-**LIST OF PATCHES**
+**LIST OF MODS**
 
-- The game runs at 60 FPS during gameplay without framerate-related glitches (hopefully).
+- The game runs at 60 FPS during gameplay without framerate-related glitches.
 - Widescreen hack without model clipping or HUD stretching.
 - All FMVs can be skipped by pressing Start.
 - Cutscenes can be skipped by holding B before a cutscene loads.
 - If you cannot run in a straight line with your controller/keyboard, there is a patch to fix that.
-- Less choppy ocean in Emerald Coast (similar to Dreamcast Conversion for SADX PC).
-- Some levels have better level draw distance.
+- Minor bugfixes for some levels such as object placement, Z fighting fixes etc.
+- Better level and object draw distance.
+- Some mods made for the PC version of Sonic Adventure DX may have Dreamcast adaptations in the future.
 
 **LIST OF CHEAT CODES**
 - All characters unlocked in Adventure Mode.
 - Easy fishing (infinite rod tension).
 
 
-All patches are optional and can be toggled individually before building the image. Cheat codes can be toggled in flycast's Cheats menu.
+All mods are optional and can be toggled individually before building the image. Cheat codes can be toggled in flycast's Cheats menu.
 
 
 **PREREQUISITES**
 
 - Sonic Adventure US 1.005 GDI image.
 - [flycast](https://flyinghead.github.io/flycast-builds/) or reicast to play the game.
+- Dreamcast BIOS for flycast (optional?)
 
-**As of August 2021, only flycast is compatible with the 60 FPS code and the current implementation of the widescreen hack. The cheat table is in the RetroArch .cht format used by flycast.**
+**As of September 2021, only flycast is compatible with the 60 FPS code and the current implementation of the widescreen hack. The cheat table is in the RetroArch .cht format used by flycast.**
 
 **HOW TO USE**
-1. Download the latest [release](https://github.com/PiKeyAr/sa1-dc-hd/releases) and extract it somewhere.
-2. Run `Patcher.exe`.
-3. In the first tab, select the folder containing your SA1 GDI file. If the SA1 image is the correct version, two other tabs will appear.
-![Tab1](images/tab1.png)
-4. In the second tab, select the patches you would like to apply.
-![Tab2](images/tab2.png)
-5. In the third tab, select the output path for the patched image and click Build. Wait for the process to finish.
-![Tab3](images/tab3.png)
-6. Run flycast and select the patched image.
-7. Load the cheat file called `SA1-DC-HD.cht` located in the same folder as the patched image.
-![Cheat](images/cheat.png)
-8. If you are using the widescreen hack, make sure the culling fix is enabled in the cheats menu.
-![Culling](images/culling.png)
+
+See [this wiki page](https://github.com/PiKeyAr/sa1-dc-hd/wiki/Using-Sonic-Adventure-Image-Builder).
 
 **CONFIGURING FLYCAST**
 
-
-Video tab:
-![Flycast-Video](images/flycast_video.png)
+See [this page](https://github.com/PiKeyAr/sa1-dc-hd/wiki/Configuring-flycast-for-the-modded-image)
 
 **CREDITS**
 
