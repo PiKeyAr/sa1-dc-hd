@@ -1,4 +1,4 @@
- Sonic Adventure DC-HD
+# Sonic Adventure DC-HD Image Builder
 
 Version 09/09/2021
 
@@ -45,7 +45,7 @@ See [this page](https://github.com/PiKeyAr/sa1-dc-hd/wiki/Configuring-flycast-fo
 
 - [Exant](https://github.com/Exant64) for work on the hardest parts related to widescreen and skippable cutscenes, as well as general help
 
-This patcher uses the following tools/libraries:
+This program relies on the following tools and libraries:
 - bin2iso and extract from FamilyGuy's GDI2Data https://dcemulation.org/dumpcast/viewtopic.php?t=785
 - buildgdi from Sappharad's GDIbuilder https://github.com/Sappharad/GDIbuilder
 - Sewer56's dlang-prs https://github.com/Sewer56/dlang-prs
