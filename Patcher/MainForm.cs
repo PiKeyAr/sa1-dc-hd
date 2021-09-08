@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace GUIPatcher
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         public class Mod
         {
@@ -44,7 +44,7 @@ namespace GUIPatcher
         public string currentDir;
         public TextBoxWriter writer;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             currentDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
@@ -200,7 +200,7 @@ namespace GUIPatcher
                     result = SA1Version.Unknown;
                     break;
             }
-            string correctstring = correct ? "This is the correct version of the game." : "This is the wrong version of the game.";
+            string correctstring = correct ? "This is the correct version of the game. You can now use the Mods and Build Image tabs." : "This is the wrong version of the game.";
             labelGameCheckResult.Text = (correctstring + System.Environment.NewLine + System.Environment.NewLine + "Game version: " + result.ToString() + System.Environment.NewLine + "Version string: " + ver);
             return correct;
         }

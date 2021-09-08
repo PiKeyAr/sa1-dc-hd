@@ -1,7 +1,7 @@
 ﻿
 namespace GUIPatcher
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@ namespace GUIPatcher
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.modDescription = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabMods = new System.Windows.Forms.TabPage();
@@ -38,24 +38,24 @@ namespace GUIPatcher
             this.columnName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnAuthor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.tabBuild = new System.Windows.Forms.TabPage();
-            this.buttonBuild = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.buttonBrowseOutput = new System.Windows.Forms.Button();
-            this.textBoxOutputPath = new System.Windows.Forms.TextBox();
-            this.labelStatus = new System.Windows.Forms.Label();
-            this.textBoxLog = new System.Windows.Forms.TextBox();
             this.tabOptions = new System.Windows.Forms.TabPage();
             this.labelGameCheckResult = new System.Windows.Forms.Label();
             this.buttonBrowse = new System.Windows.Forms.Button();
             this.textBoxOriginalPath = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.tabBuild = new System.Windows.Forms.TabPage();
+            this.label4 = new System.Windows.Forms.Label();
+            this.buttonBrowseOutput = new System.Windows.Forms.Button();
+            this.textBoxOutputPath = new System.Windows.Forms.TextBox();
+            this.labelStatus = new System.Windows.Forms.Label();
+            this.textBoxLog = new System.Windows.Forms.TextBox();
+            this.buttonBuild = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.buttonSaveSettings = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabMods.SuspendLayout();
-            this.tabBuild.SuspendLayout();
             this.tabOptions.SuspendLayout();
+            this.tabBuild.SuspendLayout();
             this.SuspendLayout();
             // 
             // modDescription
@@ -130,6 +130,58 @@ namespace GUIPatcher
             this.columnVersion.Text = "Version";
             this.columnVersion.Width = 99;
             // 
+            // tabOptions
+            // 
+            this.tabOptions.BackColor = System.Drawing.SystemColors.Control;
+            this.tabOptions.Controls.Add(this.labelGameCheckResult);
+            this.tabOptions.Controls.Add(this.buttonBrowse);
+            this.tabOptions.Controls.Add(this.textBoxOriginalPath);
+            this.tabOptions.Controls.Add(this.label3);
+            this.tabOptions.Location = new System.Drawing.Point(4, 29);
+            this.tabOptions.Name = "tabOptions";
+            this.tabOptions.Padding = new System.Windows.Forms.Padding(3);
+            this.tabOptions.Size = new System.Drawing.Size(687, 641);
+            this.tabOptions.TabIndex = 1;
+            this.tabOptions.Text = "Options";
+            // 
+            // labelGameCheckResult
+            // 
+            this.labelGameCheckResult.AutoSize = true;
+            this.labelGameCheckResult.Location = new System.Drawing.Point(16, 169);
+            this.labelGameCheckResult.Name = "labelGameCheckResult";
+            this.labelGameCheckResult.Size = new System.Drawing.Size(521, 20);
+            this.labelGameCheckResult.TabIndex = 3;
+            this.labelGameCheckResult.Text = "Browse for a folder to check whether it is the correct version of the game.";
+            // 
+            // buttonBrowse
+            // 
+            this.buttonBrowse.Location = new System.Drawing.Point(552, 96);
+            this.buttonBrowse.Name = "buttonBrowse";
+            this.buttonBrowse.Size = new System.Drawing.Size(102, 37);
+            this.buttonBrowse.TabIndex = 2;
+            this.buttonBrowse.Text = "Browse...";
+            this.buttonBrowse.UseVisualStyleBackColor = true;
+            this.buttonBrowse.Click += new System.EventHandler(this.buttonBrowse_Click);
+            // 
+            // textBoxOriginalPath
+            // 
+            this.textBoxOriginalPath.Location = new System.Drawing.Point(20, 101);
+            this.textBoxOriginalPath.Name = "textBoxOriginalPath";
+            this.textBoxOriginalPath.Size = new System.Drawing.Size(517, 26);
+            this.textBoxOriginalPath.TabIndex = 1;
+            this.textBoxOriginalPath.TextChanged += new System.EventHandler(this.textBoxOriginalPath_TextChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(16, 15);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(605, 60);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Select the folder containing the original Sonic Adventure (US, 1.005) GDI file:\r\n" +
+    "\r\nThis program will create a patched GDI image of Sonic Adventure with selected " +
+    "mods.\r\n";
+            // 
             // tabBuild
             // 
             this.tabBuild.BackColor = System.Drawing.SystemColors.Control;
@@ -144,17 +196,6 @@ namespace GUIPatcher
             this.tabBuild.Size = new System.Drawing.Size(687, 641);
             this.tabBuild.TabIndex = 2;
             this.tabBuild.Text = "Build Image";
-            // 
-            // buttonBuild
-            // 
-            this.buttonBuild.Enabled = false;
-            this.buttonBuild.Location = new System.Drawing.Point(575, 692);
-            this.buttonBuild.Name = "buttonBuild";
-            this.buttonBuild.Size = new System.Drawing.Size(128, 37);
-            this.buttonBuild.TabIndex = 10;
-            this.buttonBuild.Text = "Build Image";
-            this.buttonBuild.UseVisualStyleBackColor = true;
-            this.buttonBuild.Click += new System.EventHandler(this.buttonBuild_Click);
             // 
             // label4
             // 
@@ -203,55 +244,16 @@ namespace GUIPatcher
             this.textBoxLog.Size = new System.Drawing.Size(667, 524);
             this.textBoxLog.TabIndex = 5;
             // 
-            // tabOptions
+            // buttonBuild
             // 
-            this.tabOptions.BackColor = System.Drawing.SystemColors.Control;
-            this.tabOptions.Controls.Add(this.labelGameCheckResult);
-            this.tabOptions.Controls.Add(this.buttonBrowse);
-            this.tabOptions.Controls.Add(this.textBoxOriginalPath);
-            this.tabOptions.Controls.Add(this.label3);
-            this.tabOptions.Location = new System.Drawing.Point(4, 29);
-            this.tabOptions.Name = "tabOptions";
-            this.tabOptions.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOptions.Size = new System.Drawing.Size(687, 641);
-            this.tabOptions.TabIndex = 1;
-            this.tabOptions.Text = "Options";
-            // 
-            // labelGameCheckResult
-            // 
-            this.labelGameCheckResult.AutoSize = true;
-            this.labelGameCheckResult.Location = new System.Drawing.Point(16, 217);
-            this.labelGameCheckResult.Name = "labelGameCheckResult";
-            this.labelGameCheckResult.Size = new System.Drawing.Size(521, 20);
-            this.labelGameCheckResult.TabIndex = 3;
-            this.labelGameCheckResult.Text = "Browse for a folder to check whether it is the correct version of the game.";
-            // 
-            // buttonBrowse
-            // 
-            this.buttonBrowse.Location = new System.Drawing.Point(552, 144);
-            this.buttonBrowse.Name = "buttonBrowse";
-            this.buttonBrowse.Size = new System.Drawing.Size(102, 37);
-            this.buttonBrowse.TabIndex = 2;
-            this.buttonBrowse.Text = "Browse...";
-            this.buttonBrowse.UseVisualStyleBackColor = true;
-            this.buttonBrowse.Click += new System.EventHandler(this.buttonBrowse_Click);
-            // 
-            // textBoxOriginalPath
-            // 
-            this.textBoxOriginalPath.Location = new System.Drawing.Point(20, 149);
-            this.textBoxOriginalPath.Name = "textBoxOriginalPath";
-            this.textBoxOriginalPath.Size = new System.Drawing.Size(517, 26);
-            this.textBoxOriginalPath.TabIndex = 1;
-            this.textBoxOriginalPath.TextChanged += new System.EventHandler(this.textBoxOriginalPath_TextChanged);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(16, 15);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(605, 100);
-            this.label3.TabIndex = 0;
-            this.label3.Text = resources.GetString("label3.Text");
+            this.buttonBuild.Enabled = false;
+            this.buttonBuild.Location = new System.Drawing.Point(575, 692);
+            this.buttonBuild.Name = "buttonBuild";
+            this.buttonBuild.Size = new System.Drawing.Size(128, 37);
+            this.buttonBuild.TabIndex = 10;
+            this.buttonBuild.Text = "Build Image";
+            this.buttonBuild.UseVisualStyleBackColor = true;
+            this.buttonBuild.Click += new System.EventHandler(this.buttonBuild_Click);
             // 
             // timer1
             // 
@@ -268,7 +270,7 @@ namespace GUIPatcher
             this.buttonSaveSettings.UseVisualStyleBackColor = true;
             this.buttonSaveSettings.Click += new System.EventHandler(this.buttonSaveSettings_Click);
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -279,15 +281,15 @@ namespace GUIPatcher
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "Sonic Adventure Image Builder";
             this.tabControl1.ResumeLayout(false);
             this.tabMods.ResumeLayout(false);
             this.tabMods.PerformLayout();
-            this.tabBuild.ResumeLayout(false);
-            this.tabBuild.PerformLayout();
             this.tabOptions.ResumeLayout(false);
             this.tabOptions.PerformLayout();
+            this.tabBuild.ResumeLayout(false);
+            this.tabBuild.PerformLayout();
             this.ResumeLayout(false);
 
         }

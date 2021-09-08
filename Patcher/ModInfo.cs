@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GUIPatcher
 {
-    public partial class Form1
+    public partial class MainForm
     {
 
     }
