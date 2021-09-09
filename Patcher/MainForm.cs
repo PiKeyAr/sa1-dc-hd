@@ -74,12 +74,16 @@ namespace GUIPatcher
                 {
                     bool missing = true;
                     if (activeModListINI[i] != "")
+                    {
                         foreach (Mod mod in mods)
                             if (mod.Name == activeModListINI[i])
                             {
                                 missing = false;
                                 activeMods.Add(activeModListINI[i]);
                             }
+                    }
+                    else
+                        missing = false;
                     if (missing)
                     {
                         MessageBox.Show("Mod '" + activeModListINI[i] + "' is missing.\n\nIt will be removed from the active mod list.");
