@@ -39,7 +39,7 @@ See [this wiki page](https://github.com/PiKeyAr/sa1-dc-hd/wiki/Using-Sonic-Adven
 
 **CONFIGURING FLYCAST**
 
-See [this page](https://github.com/PiKeyAr/sa1-dc-hd/wiki/Configuring-flycast-for-the-modded-image)
+See [this page](https://github.com/PiKeyAr/sa1-dc-hd/wiki/Configuring-flycast-for-the-modded-image).
 
 **CREDITS**
 
