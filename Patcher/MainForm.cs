@@ -8,7 +8,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using DiscUtils.Gdrom;
 using System.Windows.Forms;
 
 namespace GUIPatcher
@@ -349,12 +351,10 @@ namespace GUIPatcher
 
         void Step2_extract_exit(object sender, System.EventArgs e)
         {
-            string filename;
             string workdir = Path.Combine(textBoxOutputPath.Text);
-            string dataDir = "\"" + Path.Combine(workdir, "data") + "\"";
-            string ipBin = "\"" + Path.Combine(currentDir, "utils", "ip.bin") + "\"";
-            string gdiOutput = "\"" + workdir + "\"";
-            string args;
+            string dataDir = Path.Combine(workdir, "data");
+            string ipBin = Path.Combine(currentDir, "utils", "ip.bin");
+            string gdiOutput = workdir;
             if (!File.Exists(Path.Combine(textBoxOutputPath.Text, "data", "1ST_READ.BIN")))
             {
                 Console.WriteLine("Error: Extracted file {0} not found", Path.Combine(textBoxOutputPath.Text, "data", "1ST_READ.BIN"));
@@ -411,17 +411,29 @@ namespace GUIPatcher
                     }
             }
             RefreshProgress("Step 5/6: Building a modified image");
-            filename = "buildgdi.exe";
-            args = "-data " + dataDir + " -ip " + ipBin + " -output " + gdiOutput + " -raw";
-            CreateProcessInfo(filename, workdir, args, Step4_gdi_exit);
-        }
-
-        void Step4_gdi_exit(object sender, System.EventArgs e)
-        {
+            BuildGDI(dataDir, ipBin, gdiOutput);
             RefreshProgress("Step 6/6: Cleaning up");
             string directoryPath = Path.Combine(textBoxOutputPath.Text, "data");
-            Task<bool> task = TryDeleteDirectory(directoryPath, 3, 30);
-            task.Wait();
+            int retries = 0;
+            while (true)
+                try
+                {
+                    Directory.Delete(directoryPath, true);
+                    Console.WriteLine("Data folder deleted successfully.");
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    if (retries > 9)
+                    {
+                        Console.WriteLine("Could not delete data folder: {0}", ex.Message.ToString());
+                        goto end;
+                    }
+                    retries++;
+                    Console.WriteLine("Unable to delete data folder. Trying again (attempt {0} of 10)", retries.ToString());
+                    Thread.Sleep(1000);
+                }
+            end:
             Console.WriteLine("The modified image is located at: {0}", textBoxOutputPath.Text);
             if (File.Exists(Path.Combine(currentDir, "codes", "SA1-DC-HD.cht")))
             {
@@ -431,11 +443,6 @@ namespace GUIPatcher
             Console.WriteLine("DONE!");
             RefreshProgress("Click Build to create a modified GDI image. Progress will be shown below.", false);
             EnableBuildButton();
-        }
-
-        void proc_DataReceived(object sender, DataReceivedEventArgs e)
-        {
-            Console.WriteLine(e.Data);
         }
 
         private void buttonBrowseOutput_Click(object sender, EventArgs e)
@@ -520,46 +527,29 @@ namespace GUIPatcher
             return true;
         }
 
-        // From https://stackoverflow.com/a/44324346
-        public static async Task<bool> TryDeleteDirectory(
-        string directoryPath,
-        int maxRetries = 10,
-        int millisecondsDelay = 30)
-        {
-            if (directoryPath == null)
-                throw new ArgumentNullException(directoryPath);
-            if (maxRetries < 1)
-                throw new ArgumentOutOfRangeException(nameof(maxRetries));
-            if (millisecondsDelay < 1)
-                throw new ArgumentOutOfRangeException(nameof(millisecondsDelay));
-
-            for (int i = 0; i < maxRetries; ++i)
-            {
-                try
-                {
-                    if (Directory.Exists(directoryPath))
-                    {
-                        Directory.Delete(directoryPath, true);
-                    }
-
-                    return true;
-                }
-                catch (IOException)
-                {
-                    await Task.Delay(millisecondsDelay);
-                }
-                catch (UnauthorizedAccessException)
-                {
-                    await Task.Delay(millisecondsDelay);
-                }
-            }
-
-            return false;
-        }
-
         private void buttonSaveSettings_Click(object sender, EventArgs e)
         {
             SaveSettings();
+        }
+
+        // GDI stuff
+        private void BuildGDI(string data, string ipBin, string outPath)
+        {
+            GDromBuilder builder = new GDromBuilder();
+            builder.ReportProgress += GDIProgressReport;
+            builder.RawMode = true;
+            builder.TruncateData = false;
+            List<DiscTrack> tracks = null;
+            tracks = builder.BuildGDROM(data, ipBin, null, outPath);
+            Console.WriteLine(builder.GetGDIText(tracks));
+        }
+
+        private static void GDIProgressReport(int amount)
+        {
+            if (amount % 10 == 0)
+            {
+                Console.WriteLine(amount.ToString() + "%");
+            }
         }
     }
 
