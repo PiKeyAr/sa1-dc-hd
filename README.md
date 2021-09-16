@@ -1,6 +1,6 @@
 # Sonic Adventure DC-HD Image Builder
 
-Version 14/09/2021
+Version 16/09/2021
 
 This repository hosts a program that applies a set of patches (mods) to the Dreamcast version of Sonic Adventure to introduce various fixes and improvements.
 
@@ -27,9 +27,10 @@ All mods are optional and can be toggled individually before building the image.
 
 **PREREQUISITES**
 
+- [.NET 5.0 runtime - Desktop](https://dotnet.microsoft.com/download/dotnet/thank-you/runtime-desktop-5.0.10-windows-x86-installer).
 - Sonic Adventure US 1.005 GDI image.
-- [flycast](https://flyinghead.github.io/flycast-builds/) or reicast to play the game.
-- Dreamcast BIOS for flycast (optional?)
+- [flycast emulator](https://flyinghead.github.io/flycast-builds/).
+- Dreamcast BIOS for flycast (optional?).
 
 **As of September 2021, only flycast is compatible with the 60 FPS code and the current implementation of the widescreen hack. The cheat table is in the RetroArch .cht format used by flycast.**
 
@@ -46,9 +47,9 @@ See [this page](https://github.com/PiKeyAr/sa1-dc-hd/wiki/Configuring-flycast-fo
 - [Exant](https://github.com/Exant64) for work on the hardest parts related to widescreen and skippable cutscenes, as well as general help
 
 This program relies on the following tools and libraries:
-- bin2iso by jj1odm and ISO image extractor from FamilyGuy's GDI2Data https://dcemulation.org/dumpcast/viewtopic.php?t=785
-- DiscUtils https://github.com/DiscUtils/DiscUtils
-- DiscUtils fork from Sappharad's GDIbuilder https://github.com/Sappharad/GDIbuilder
-- Sewer56's dlang-prs https://github.com/Sewer56/dlang-prs
-- SonicFreak94's pvmx https://github.com/michael-fadely/pvmx
-- ini-parser https://github.com/rickyah/ini-parser
+- bin2iso by jj1odm and ISO image extractor from [FamilyGuy's GDI2Data](https://dcemulation.org/dumpcast/viewtopic.php?t=785)
+- [DiscUtils](https://github.com/DiscUtils/DiscUtils)
+- DiscUtils fork from [Sappharad's GDIbuilder](https://github.com/Sappharad/GDIbuilder)
+- [Sewer56's dlang-prs](https://github.com/Sewer56/dlang-prs)
+- [SonicFreak94's pvmx](https://github.com/michael-fadely/pvmx)
+- [ini-parser](https://github.com/rickyah/ini-parser)

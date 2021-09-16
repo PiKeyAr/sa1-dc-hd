@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <Version>1.2.1</Version>
   </PropertyGroup>
 
@@ -10,11 +10,11 @@
 </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\utils</OutputPath>
+    <OutputPath>..\bin</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\utils</OutputPath>
+    <OutputPath>..\bin</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

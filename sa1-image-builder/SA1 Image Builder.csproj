@@ -1,0 +1,89 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+    <RootNamespace>GUIPatcher</RootNamespace>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>Patcher</AssemblyName>
+  </PropertyGroup>
+
+<PropertyGroup>            
+   <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>            
+   <PackageId>sa1-image-builder</PackageId>            
+   <Authors>PkR</Authors>            
+   <Company />            
+   <Description>Image Patcher for Sonic Adventure (Dreamcast)</Description>            
+   <PackageProjectUrl>https://github.com/PiKeyAr/sa1-dc-hd</PackageProjectUrl>            
+   <RepositoryUrl>https://github.com/PiKeyAr/sa1-dc-hd</RepositoryUrl>            
+   <PackageIcon>sa1alt.png</PackageIcon>            
+   <PackageIconUrl />            
+   <ApplicationIcon>sa1alt.ico</ApplicationIcon>
+</PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\bin\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\bin\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="csharp-prs" Version="2.1.3" />
+    <PackageReference Include="csharp-prs-interfaces" Version="1.0.0" />
+    <PackageReference Include="ini-parser-netstandard" Version="2.5.2" />
+    <PackageReference Include="Ookii.Dialogs.Wpf" Version="4.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DiscUtils\DiscUtils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="sa1alt.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <NativeLibs Remove="sa1alt.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="mods\codes.cht" />
+    <None Remove="mods\SA1-DC-HD.cht" />
+    <None Remove="sa1alt.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="sa1alt.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+   <Content Include="mods\**" CopyToPublishDirectory="Always" />
+   <Content Include="utils\**" CopyToPublishDirectory="Always" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="codes\**" />
+    <EmbeddedResource Remove="codes\**" />
+    <None Remove="codes\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="mods\SA1-DC-HD.cht" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NativeLibs Remove="BuildProcess.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NativeLibs Remove="ApplyMods.cs" />
+  </ItemGroup>
+
+</Project>

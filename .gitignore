@@ -10,3 +10,6 @@
 /TextureTool/obj/Release
 /TextureTool/obj/Debug
 /DiscUtils/obj
+/release
+/sa1-image-builder/bin/Release/net5.0-windows
+/sa1-image-builder/obj
