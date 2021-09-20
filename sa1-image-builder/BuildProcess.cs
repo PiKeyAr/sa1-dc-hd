@@ -11,39 +11,35 @@ namespace GUIPatcher
 {
     public partial class MainForm
     {
-        // Step 1 - Convert track03 using bin2iso
-        private void StartBin2Iso()
+        // Step 1 - Find GDI file and extract track03
+        private void ExtractGDI()
         {
+            // Check if destination folder exists
+            if (!Directory.Exists(Path.Combine(textBoxOutputPath.Text)))
+                Directory.CreateDirectory(Path.Combine(textBoxOutputPath.Text));
             string filename;
-            string workdir = Path.Combine(textBoxOutputPath.Text, "data");
+            string workdir_main = textBoxOutputPath.Text;
+            string workdir_data = Path.Combine(textBoxOutputPath.Text, "data");
             string args;
-            RefreshProgress("Step 1/7: Running bin2iso on track 3");
-            Directory.CreateDirectory(Path.Combine(textBoxOutputPath.Text, "data"));
-            // bin2iso
-            filename = "bin2iso.exe";
-            args = "\"" + Path.Combine(textBoxOriginalPath.Text, "track03.bin") + "\" \"" + Path.Combine(textBoxOutputPath.Text, "track03.iso") + "\"";
-            Process prc = CreateProcessInfo(filename, workdir, args, Bin2IsoExit);
-        }
-
-        // Step 2 - Extract track03
-        private void Bin2IsoExit(object sender, System.EventArgs e)
-        {
-            string filename;
-            string workdir = Path.Combine(textBoxOutputPath.Text, "data");
-            string args;
-            if (!File.Exists(Path.Combine(textBoxOutputPath.Text, "track03.iso")))
+            RefreshProgress("Step 1/6: Extracting original image");
+            string[] gdis = Directory.GetFiles(textBoxOriginalPath.Text, "*.gdi");
+            if (gdis.Length == 0)
             {
-                Console.WriteLine("Error converting BIN to ISO: destination file {0} doesn't exist", Path.Combine(textBoxOutputPath.Text, "track03.iso"));
+                Console.WriteLine("GDI file not found! Aborting.");
                 return;
             }
-            // Extract
-            RefreshProgress("Step 2/7: Extracting track03.iso");
-            filename = "extract.exe";
-            args = "\"" + Path.Combine(textBoxOutputPath.Text, "track03.iso") + "\"";
-            CreateProcessInfo(filename, workdir, args, ApplyMods);
+            else if (gdis.Length > 1)
+            {
+                Console.WriteLine("Multiple GDI files found. Please use only one GDI file. Aborting.");
+                return;
+            }
+            Directory.CreateDirectory(workdir_data);
+            filename = "gditools.exe";
+            args = "-i \"" + gdis[0] + "\"" +  " -o \"" + workdir_main + "\"" + " --extract-all -b ip.bin";
+            Process prc = CreateProcessInfo(filename, textBoxOutputPath.Text, args, ApplyMods);
         }
 
-        // Step 3 - Apply mods
+        // Step 2 - Apply mods
         private void ApplyMods(object sender, System.EventArgs e)
         {
             // Check if 1ST_READ exists
@@ -56,7 +52,7 @@ namespace GUIPatcher
             // Delete track03.iso
             if (File.Exists(Path.Combine(textBoxOutputPath.Text, "track03.iso")))
                 File.Delete(Path.Combine(textBoxOutputPath.Text, "track03.iso"));
-            RefreshProgress("Step 3/7: Patching files");
+            RefreshProgress("Step 2/6: Patching files");
             bool errors = false;
 
             // Select active mods to apply
@@ -118,10 +114,10 @@ namespace GUIPatcher
             CopyOriginalDataTracks();
         }
 
-        // Step 4 - Copy back original data tracks
+        // Step 3 - Copy back original data tracks
         private void CopyOriginalDataTracks()
         {
-            RefreshProgress("Step 4/7: Copying original data tracks");
+            RefreshProgress("Step 3/6: Copying original data tracks");
             string[] originalFiles = Directory.GetFiles(textBoxOriginalPath.Text, "*.*", SearchOption.TopDirectoryOnly);
             for (int u = 0; u < originalFiles.Length; u++)
             {
@@ -149,14 +145,14 @@ namespace GUIPatcher
             BuildTrack03();
         }
 
-        // Step 5 - Build track03.bin
+        // Step 4 - Build track03.bin
         private void BuildTrack03()
         {
             string workdir = Path.Combine(textBoxOutputPath.Text);
             string dataDir = Path.Combine(workdir, "data");
-            string ipBin = Path.Combine(currentDirAss, "utils", "ip.bin");
+            string ipBin = Path.Combine(workdir, "ip.bin");
             string gdiOutput = workdir;
-            RefreshProgress("Step 5/7: Building a modified image");
+            RefreshProgress("Step 4/6: Building a modified image");
             GDromBuilder builder = new GDromBuilder();
             builder.ReportProgress += GDIProgressReport;
             builder.RawMode = true;
@@ -175,11 +171,11 @@ namespace GUIPatcher
             }
         }
 
-        // Step 6 - Apply codes & cleanup
+        // Step 5 - Apply codes & cleanup
         private void Cleanup()
         {
             // Apply codes
-            RefreshProgress("Step 6/7: Applying codes");
+            RefreshProgress("Step 5/6: Applying codes");
             for (int c = 0; c < 99; c++)
             {
                 string keyName = "cheat" + c.ToString() + "_desc";
@@ -198,13 +194,14 @@ namespace GUIPatcher
             string codesOutPath = Path.Combine(textBoxOutputPath.Text, "SA1-DC-HD.cht");
             saveCodes.WriteFile(codesOutPath, codes, System.Text.Encoding.ASCII);
 
-            // Cleanup
-            RefreshProgress("Step 7/7: Cleaning up");
+            // Step 6 - Cleanup
+            RefreshProgress("Step 6/6: Cleaning up");
             string directoryPath = Path.Combine(textBoxOutputPath.Text, "data");
             int retries = 0;
             while (true)
                 try
                 {
+                    File.Delete(Path.Combine(textBoxOutputPath.Text, "ip.bin"));
                     Directory.Delete(directoryPath, true);
                     Console.WriteLine("Data folder deleted successfully.");
                     break;

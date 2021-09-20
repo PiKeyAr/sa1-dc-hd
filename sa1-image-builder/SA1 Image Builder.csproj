@@ -54,8 +54,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="mods\codes.cht" />
-    <None Remove="mods\SA1-DC-HD.cht" />
     <None Remove="sa1alt.ico" />
   </ItemGroup>
 
@@ -64,7 +62,6 @@
   </ItemGroup>
 
   <ItemGroup>
-   <Content Include="mods\**" CopyToPublishDirectory="Always" />
    <Content Include="utils\**" CopyToPublishDirectory="Always" />
   </ItemGroup>
 
@@ -75,15 +72,75 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="mods\SA1-DC-HD.cht" />
-  </ItemGroup>
-
-  <ItemGroup>
     <NativeLibs Remove="BuildProcess.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <NativeLibs Remove="ApplyMods.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="utils\DiscUtils.deps.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="utils\DiscUtils.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="utils\gditools.exe">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="utils\python27.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="C:\Users\PkR\.nuget\packages\csharp-prs\2.1.3\build\dlang-prs32.dll" Link="utils\dlang-prs32.dll" />
+    <None Update="mods\60 FPS\mod.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="mods\Bugfixes\mod.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="mods\Bugfixes\PVME101FACTORY.PRS">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="mods\Bugfixes\SET1500S.bin">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="mods\codes.cht">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="mods\Draw Distance\mod.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="mods\Drift Fix\mod.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="mods\SADXStyleWater\BEACH_SEA.PRS">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="mods\SADXStyleWater\mod.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="mods\Skip Cutscenes\mod.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="mods\Skip FMVs\mod.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="mods\Widescreen\mod.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="mods\WindyValleyExpanded\CAM0200S.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="mods\WindyValleyExpanded\mod.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="mods\WindyValleyExpanded\SET0200S.BIN">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

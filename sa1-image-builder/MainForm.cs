@@ -400,7 +400,7 @@ namespace GUIPatcher
             timer1.Enabled = true;
             Console.SetOut(writer);
             Console.WriteLine("Build process started");
-            StartBin2Iso();
+            ExtractGDI();
         }
        
         private void buttonBrowseOutput_Click(object sender, EventArgs e)
