@@ -99,6 +99,9 @@
     <None Update="mods\60 FPS\mod.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="mods\Bugfixes\HOTSHELTER.MLT">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="mods\Bugfixes\mod.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
