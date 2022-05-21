@@ -63,8 +63,9 @@ namespace GUIPatcher
             // 
             // modDescription
             // 
+            this.modDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.modDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.modDescription.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.modDescription.Location = new System.Drawing.Point(3, 562);
             this.modDescription.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.modDescription.Multiline = true;
@@ -78,6 +79,9 @@ namespace GUIPatcher
             // 
             // tabControl1
             // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabMods);
             this.tabControl1.Controls.Add(this.tabCodes);
             this.tabControl1.Controls.Add(this.tabOptions);
@@ -104,12 +108,14 @@ namespace GUIPatcher
             // 
             // modListView
             // 
+            this.modListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.modListView.CheckBoxes = true;
             this.modListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnName,
             this.columnAuthor,
             this.columnVersion});
-            this.modListView.Dock = System.Windows.Forms.DockStyle.Top;
             this.modListView.FullRowSelect = true;
             this.modListView.HideSelection = false;
             this.modListView.Location = new System.Drawing.Point(3, 4);
@@ -150,8 +156,10 @@ namespace GUIPatcher
             // 
             // codesListView
             // 
+            this.codesListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.codesListView.CheckBoxes = true;
-            this.codesListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.codesListView.FullRowSelect = true;
             this.codesListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.codesListView.HideSelection = false;
@@ -190,6 +198,7 @@ namespace GUIPatcher
             // 
             // buttonBrowse
             // 
+            this.buttonBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonBrowse.Location = new System.Drawing.Point(613, 120);
             this.buttonBrowse.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonBrowse.Name = "buttonBrowse";
@@ -201,6 +210,8 @@ namespace GUIPatcher
             // 
             // textBoxOriginalPath
             // 
+            this.textBoxOriginalPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxOriginalPath.Location = new System.Drawing.Point(22, 126);
             this.textBoxOriginalPath.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textBoxOriginalPath.Name = "textBoxOriginalPath";
@@ -246,6 +257,7 @@ namespace GUIPatcher
             // 
             // buttonBrowseOutput
             // 
+            this.buttonBrowseOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonBrowseOutput.Location = new System.Drawing.Point(637, 38);
             this.buttonBrowseOutput.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonBrowseOutput.Name = "buttonBrowseOutput";
@@ -257,6 +269,8 @@ namespace GUIPatcher
             // 
             // textBoxOutputPath
             // 
+            this.textBoxOutputPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxOutputPath.Location = new System.Drawing.Point(13, 44);
             this.textBoxOutputPath.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textBoxOutputPath.Name = "textBoxOutputPath";
@@ -275,6 +289,9 @@ namespace GUIPatcher
             // 
             // textBoxLog
             // 
+            this.textBoxLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxLog.Location = new System.Drawing.Point(9, 136);
             this.textBoxLog.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.textBoxLog.Multiline = true;
@@ -286,6 +303,7 @@ namespace GUIPatcher
             // 
             // buttonBuild
             // 
+            this.buttonBuild.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonBuild.Enabled = false;
             this.buttonBuild.Location = new System.Drawing.Point(639, 865);
             this.buttonBuild.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -303,6 +321,7 @@ namespace GUIPatcher
             // 
             // buttonSaveSettings
             // 
+            this.buttonSaveSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSaveSettings.Location = new System.Drawing.Point(490, 865);
             this.buttonSaveSettings.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonSaveSettings.Name = "buttonSaveSettings";
@@ -314,13 +333,12 @@ namespace GUIPatcher
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(794, 921);
             this.Controls.Add(this.buttonBuild);
             this.Controls.Add(this.buttonSaveSettings);
             this.Controls.Add(this.tabControl1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
