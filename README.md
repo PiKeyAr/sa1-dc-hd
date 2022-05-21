@@ -1,8 +1,6 @@
 # Sonic Adventure DC-HD Image Builder
 
-# This project in no longer in active development
-
-Version 12/02/2022
+Version 21/05/2022
 
 This repository hosts a program that applies a set of patches (mods) to the Dreamcast version of Sonic Adventure to introduce various fixes and improvements.
 
